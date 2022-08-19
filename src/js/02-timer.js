@@ -9,28 +9,34 @@ const hoursElement = document.querySelector('[data-hours]');
 const minutesElement = document.querySelector('[data-minutes]');
 const secondsElement = document.querySelector('[data-seconds]');
 let timer = null;
+
 buttonStart.disabled = true;
 
 const options = {
   enableTime: true,  
   time_24hr: true,
   defaultDate: new Date(),
-  minuteIncrement: 1,
-  
+  minuteIncrement: 1,   
   onClose(selectedDates) {
-    console.log(selectedDates);    
+    console.log(selectedDates[0]);    
     if (selectedDates[0] < options.defaultDate) {
       console.log(window.alert("Please choose a date in the future"));
     } else {
       buttonStart.disabled = false; 
-      buttonStart.addEventListener('click', () => {
-        timer = setInterval(() => {
-          delta = selectedDates[0] - new Date();
-          convertMs(delta);
-          console.log(convertMs(delta));
-        }, 1000);
-      });
-    } 
+    }    
+    buttonStart.addEventListener('click', () => {
+      timer = setInterval(() => {
+        delta = selectedDates[0] - new Date();        
+        convertMs(delta);
+        console.log(convertMs(delta));
+        stopTimer();
+      }, 1000);
+      function stopTimer() {        
+        if (selectedDates[0] - new Date() <= 999) {
+          clearInterval(timer);
+        }
+      }
+    });
   }
 };
 
