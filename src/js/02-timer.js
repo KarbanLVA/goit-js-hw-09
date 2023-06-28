@@ -26,7 +26,7 @@ const options = {
     }    
     buttonStart.addEventListener('click', () => {
       timer = setInterval(() => {
-        delta = selectedDates[0] - new Date();        
+        delta = new Date() - selectedDates[0];        
         convertMs(delta);
         console.log(convertMs(delta));
         stopTimer();
